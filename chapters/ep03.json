@@ -1,0 +1,316 @@
+{
+  "id": 3,
+  "title": "黄金魔女的宴席",
+  "en": "Banquet of the Golden Witch",
+  "lead": "围绕绘羽、家族继承和碑文谜题，六轩岛事件呈现出新的结构。",
+  "overview": [
+    "绘羽希望获得家主认可的过去，以及她与家族地位的矛盾成为本章重点。",
+    "黄金碑文得到更加积极的解读，围绕继承和黄金的竞争改变了人物行动。",
+    "名为 EVA-贝阿朵莉切的存在进入故事，魔女形象与个体欲望之间的关系受到关注。",
+    "战人继续在不同的叙述和解释之间寻找可辩护的立场。"
+  ],
+  "events": [
+    {
+      "time": "人物回顾",
+      "title": "绘羽的执念",
+      "text": "过去与现在的绘羽相互映照，解释了她面对继承问题的态度。",
+      "kind": "人物"
+    },
+    {
+      "time": "家族会议",
+      "title": "碑文的研究",
+      "text": "大人们尝试认真解读黄金碑文。",
+      "kind": "线索"
+    },
+    {
+      "time": "事件推进",
+      "title": "黄金之谜",
+      "text": "继承与黄金的线索出现新的进展。",
+      "kind": "线索"
+    },
+    {
+      "time": "棋盘对局",
+      "title": "魔女形象变化",
+      "text": "出现与绘羽紧密相关的新魔女形象。",
+      "kind": "叙事层"
+    },
+    {
+      "time": "章末讨论",
+      "title": "对立立场",
+      "text": "推理与魔法的解释继续博弈。",
+      "kind": "叙事层"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP3-01",
+      "title": "碑文路线",
+      "question": "解读关键一步是否依赖隐含条件？",
+      "kind": "线索"
+    },
+    {
+      "id": "EP3-02",
+      "title": "绘羽的愿望",
+      "question": "动机如何与客观行为证据区分？",
+      "kind": "人物"
+    },
+    {
+      "id": "EP3-03",
+      "title": "视角与人格",
+      "question": "不同形象出现是否应理解为同一层事实？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP3-04",
+      "title": "规则验证",
+      "question": "哪些约束是这一章才出现的？",
+      "kind": "方法"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "eva",
+      "to": "eva_beatrice",
+      "kind": "关联"
+    },
+    {
+      "from": "battler",
+      "to": "beatrice",
+      "kind": "对立"
+    },
+    {
+      "from": "beatrice",
+      "to": "virgilia",
+      "kind": "关联"
+    }
+  ],
+  "tips": [
+    "重新独立记录黄金碑文的全部条件。",
+    "不要用某人“很有动机”代替物证。",
+    "把魔女层画面和六轩岛现场拆成不同的时间轴。"
+  ],
+  "tea": [
+    "将茶会与附录视为一组独立的解释材料；对新人物所给的结论也要核对前提。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "virgilia",
+      "name": "瓦尔基莉亚",
+      "role": "与魔女相关的人物",
+      "group": "叙事"
+    },
+    {
+      "id": "eva_beatrice",
+      "name": "EVA-贝阿朵莉切",
+      "role": "与绘羽有关的魔女形象",
+      "group": "叙事"
+    },
+    {
+      "id": "ange",
+      "name": "右代宫缘寿",
+      "role": "战人的妹妹",
+      "group": "家族"
+    }
+  ]
+}

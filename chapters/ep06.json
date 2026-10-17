@@ -1,0 +1,327 @@
+{
+  "id": 6,
+  "title": "黄金魔女的黎明",
+  "en": "Dawn of the Golden Witch",
+  "lead": "战人承担游戏主持者的职责；身份、爱情、逻辑难题与创作本身成为重要主题。",
+  "overview": [
+    "战人作为新的游戏主持者组织棋盘，他是否真正理解此前发生的事情成为焦点。",
+    "贝阿朵莉切的不同面貌、她与战人的关系，构成本章情感线的一部分。",
+    "让治与纱音、朱志香与嘉音的感情再次成为重要焦点。",
+    "一场逻辑难题使推理的形式与规则受到极端检验。"
+  ],
+  "events": [
+    {
+      "time": "棋盘开启",
+      "title": "战人的新立场",
+      "text": "战人以新的身份组织这一次游戏。",
+      "kind": "叙事层"
+    },
+    {
+      "time": "人物视角",
+      "title": "贝阿朵莉切的变化",
+      "text": "人物对记忆、身份和感情的理解不断变化。",
+      "kind": "人物"
+    },
+    {
+      "time": "关系推进",
+      "title": "恋爱与选择",
+      "text": "几组感情关系共同承受考验。",
+      "kind": "人物"
+    },
+    {
+      "time": "逻辑对抗",
+      "title": "严密的论证",
+      "text": "推理结构与叙事规则互相约束。",
+      "kind": "推理"
+    },
+    {
+      "time": "章节后段",
+      "title": "选择的代价",
+      "text": "需要同时检查条件能否全部成立。",
+      "kind": "推理"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP6-01",
+      "title": "游戏主持者",
+      "question": "设计棋盘的人必须遵守哪些规则？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP6-02",
+      "title": "存在与身份",
+      "question": "相同名称和不同呈现方式如何计数？",
+      "kind": "人物"
+    },
+    {
+      "id": "EP6-03",
+      "title": "逻辑难题",
+      "question": "有哪些表面冲突但实际上不同的条件？",
+      "kind": "推理"
+    },
+    {
+      "id": "EP6-04",
+      "title": "感情的证据",
+      "question": "人物的选择如何改变我们对早期情节的解读？",
+      "kind": "人物"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "battler",
+      "to": "beatrice",
+      "kind": "关联"
+    },
+    {
+      "from": "erika",
+      "to": "battler",
+      "kind": "对立"
+    },
+    {
+      "from": "shannon",
+      "to": "george",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    }
+  ],
+  "tips": [
+    "建立一张条件表，把人物、人数、位置、钥匙分别列出。",
+    "不要把某个场景中的人物称呼自动当作对全部棋盘都成立的定义。",
+    "卡住时先找冲突条件，不要直接搜索“答案”。"
+  ],
+  "tea": [
+    "章末的逻辑争论可用命题列表重新写一遍，看看究竟哪个前提改变。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "ange",
+      "name": "右代宫缘寿",
+      "role": "战人的妹妹",
+      "group": "家族"
+    },
+    {
+      "id": "erika",
+      "name": "古户绘梨花",
+      "role": "参与推理的新人物",
+      "group": "其他"
+    },
+    {
+      "id": "dlanor",
+      "name": "德拉诺尔",
+      "role": "审判者角色",
+      "group": "其他"
+    },
+    {
+      "id": "hachijo",
+      "name": "八城十八",
+      "role": "与手稿有关的人物",
+      "group": "其他"
+    }
+  ]
+}

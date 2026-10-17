@@ -1,0 +1,316 @@
+{
+  "id": 5,
+  "title": "黄金魔女的终结",
+  "en": "End of the Golden Witch",
+  "lead": "新的棋盘主导方式与新的调查者，让“怎样证明某个说法”成为关键问题。",
+  "overview": [
+    "拉姆达戴露塔与贝伦卡斯泰露在游戏中的位置发生变化，新的推理对抗出现。",
+    "古户绘梨花登上六轩岛，以侦探式论证挑战多种解释。",
+    "夏妃承受来自过去的威胁，围绕本家、身份与旧事的压力进一步集中。",
+    "本章着重讨论观测、反证、论证负担以及谁拥有定义现场的权利。"
+  ],
+  "events": [
+    {
+      "time": "棋盘变化",
+      "title": "新的游戏主导",
+      "text": "游戏规则和参与者分工被重新安排。",
+      "kind": "叙事层"
+    },
+    {
+      "time": "岛上人物",
+      "title": "绘梨花登场",
+      "text": "新调查者以鲜明的推理姿态介入事件。",
+      "kind": "调查"
+    },
+    {
+      "time": "本家内部",
+      "title": "夏妃的困境",
+      "text": "来自过去的威胁将视线引向本家旧事。",
+      "kind": "人物"
+    },
+    {
+      "time": "争论过程",
+      "title": "侦探与证明",
+      "text": "围绕现场的多种解释展开强力攻防。",
+      "kind": "推理"
+    },
+    {
+      "time": "章末",
+      "title": "局势变化",
+      "text": "这一章的游戏并非单纯地按传统命案模式收尾。",
+      "kind": "叙事层"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP5-01",
+      "title": "侦探身份",
+      "question": "侦探能确信什么，不能确信什么？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP5-02",
+      "title": "时间与证据",
+      "question": "主张者如何论证没有遗漏的可能性？",
+      "kind": "证词"
+    },
+    {
+      "id": "EP5-03",
+      "title": "过去的威胁",
+      "question": "夏妃受到的压力有哪些独立证据？",
+      "kind": "人物"
+    },
+    {
+      "id": "EP5-04",
+      "title": "举证责任",
+      "question": "把对手逼到无法立即反驳是否等同于证明？",
+      "kind": "推理"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "erika",
+      "to": "battler",
+      "kind": "对立"
+    },
+    {
+      "from": "erika",
+      "to": "dlanor",
+      "kind": "关联"
+    },
+    {
+      "from": "natsuhi",
+      "to": "kinzo",
+      "kind": "家族"
+    }
+  ],
+  "tips": [
+    "注意“事实陈述”“推理解释”和“规则赋权”的区别。",
+    "记录侦探所处位置，以及她在每个时间点拥有的信息。",
+    "把似乎成立的假说列出至少一个替代解释。"
+  ],
+  "tea": [
+    "本章的后续内容属于对局叙事的一部分，读完再评价整章立场变化。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "ange",
+      "name": "右代宫缘寿",
+      "role": "战人的妹妹",
+      "group": "家族"
+    },
+    {
+      "id": "erika",
+      "name": "古户绘梨花",
+      "role": "参与推理的新人物",
+      "group": "其他"
+    },
+    {
+      "id": "dlanor",
+      "name": "德拉诺尔",
+      "role": "审判者角色",
+      "group": "其他"
+    }
+  ]
+}

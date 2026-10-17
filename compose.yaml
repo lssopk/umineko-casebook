@@ -1,0 +1,24 @@
+services:
+  casebook:
+    build: .
+    container_name: umineko-casebook
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:${PORT:-5699}:5699"
+    volumes:
+      - casebook-state:/app/state
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5699/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+volumes:
+  casebook-state:

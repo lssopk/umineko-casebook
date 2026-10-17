@@ -1,0 +1,8 @@
+.git
+state
+*.zip
+*.pdf
+__pycache__
+create_content.py
+docs
+README.md

@@ -1,0 +1,298 @@
+{
+  "id": 2,
+  "title": "黄金魔女的回合",
+  "en": "Turn of the Golden Witch",
+  "lead": "另一种事件进程展开，战人与魔女之间的推理交锋变得更加鲜明。亲密关系、身份与“家具”一词也成为人物理解的重要入口。",
+  "overview": [
+    "让治与纱音、朱志香与嘉音的关系得到更多描绘，呈现希望、犹豫和自我认同。",
+    "六轩岛再次发生杀人事件，人物在不同地点面对难以理解的状况。",
+    "战人与贝阿朵莉切从各自立场解释事件，争论的规则和叙事层次进一步清晰。",
+    "如果用本格推理的方式复盘，最先应该明确谁亲眼看见了什么、密室的前提是什么。"
+  ],
+  "events": [
+    {
+      "time": "本章开头",
+      "title": "让治与纱音",
+      "text": "两人的私下相处揭示自我价值与情感冲突。",
+      "kind": "人物"
+    },
+    {
+      "time": "事件前",
+      "title": "朱志香与嘉音",
+      "text": "两人的相处突出了信任与迟疑。",
+      "kind": "人物"
+    },
+    {
+      "time": "10/04",
+      "title": "第二次棋盘",
+      "text": "六轩岛上的人员再次面对围绕魔女的局面。",
+      "kind": "环境"
+    },
+    {
+      "time": "10/05",
+      "title": "连续事件",
+      "text": "失踪、密室和证词成为争论的重心。",
+      "kind": "密室"
+    },
+    {
+      "time": "元叙事",
+      "title": "战人与魔女",
+      "text": "人类解释与魔女解释正式碰撞。",
+      "kind": "叙事层"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP2-01",
+      "title": "目击条件",
+      "question": "哪些画面是特定人物亲眼见到的？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP2-02",
+      "title": "密室前提",
+      "question": "门窗、锁与持钥匙的人分别已知到什么程度？",
+      "kind": "待验证"
+    },
+    {
+      "id": "EP2-03",
+      "title": "人物身份",
+      "question": "“家具”等称谓对人物心理和叙述造成了什么影响？",
+      "kind": "人物"
+    },
+    {
+      "id": "EP2-04",
+      "title": "争论规则",
+      "question": "被宣称的条件和已经共同确认的条件是否一致？",
+      "kind": "方法"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "battler",
+      "to": "beatrice",
+      "kind": "对立"
+    },
+    {
+      "from": "shannon",
+      "to": "george",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    }
+  ],
+  "tips": [
+    "把本章的密室独立画图，不要沿用 EP1 的门锁情况。",
+    "听到任何“绝对不可能”时，先问不可能的前提由谁提供。",
+    "记录角色所说的“人”“家具”“魔女”等词在不同层次中的含义。"
+  ],
+  "tea": [
+    "把茶会及「????」理解为本章追加的讨论素材，先单独记录，再对照正篇。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    }
+  ]
+}

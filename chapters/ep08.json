@@ -1,0 +1,346 @@
+{
+  "id": 8,
+  "title": "黄金魔女的黄昏",
+  "en": "Twilight of the Golden Witch",
+  "lead": "最终章以缘寿的选择与对过去的理解为中心，收束长篇中关于真相、记忆与爱的争论。",
+  "overview": [
+    "缘寿再次站在故事中心，面对过去的真相与未来的生活。",
+    "故事以特别的形式让玩家参与回顾此前的事件和人物。",
+    "不同角色对“怎样理解一场悲剧”提供不同方向的解释。",
+    "最终章包含玩家互动及结局选择，不同选择应分别存档以免混淆。"
+  ],
+  "events": [
+    {
+      "time": "最终章开场",
+      "title": "重新回到六轩岛",
+      "text": "展开一个不同于普通命案复盘的场景。",
+      "kind": "叙事层"
+    },
+    {
+      "time": "家族再会",
+      "title": "回顾人物关系",
+      "text": "前七章的重要人物、愿望和关系得到回望。",
+      "kind": "人物"
+    },
+    {
+      "time": "玩家互动",
+      "title": "问题与选择",
+      "text": "部分章节需要玩家做出选择或完成互动。",
+      "kind": "互动"
+    },
+    {
+      "time": "交锋",
+      "title": "理解真相的方式",
+      "text": "不同角色就如何面对过去展开争论。",
+      "kind": "推理"
+    },
+    {
+      "time": "终幕",
+      "title": "不同的收束方向",
+      "text": "作品呈现不同选择所带来的结局。",
+      "kind": "结局"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP8-01",
+      "title": "叙述的目的",
+      "question": "同一个事实为什么会被以不同方式讲述？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP8-02",
+      "title": "记忆与证据",
+      "question": "经历者、追寻者和旁观者的信息有什么差别？",
+      "kind": "证词"
+    },
+    {
+      "id": "EP8-03",
+      "title": "玩家的选择",
+      "question": "不同结局回答的是相同的问题吗？",
+      "kind": "推理"
+    },
+    {
+      "id": "EP8-04",
+      "title": "全作复盘",
+      "question": "哪些早期疑问得到解释，哪些仍属于你的诠释？",
+      "kind": "推理"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "ange",
+      "to": "battler",
+      "kind": "亲属"
+    },
+    {
+      "from": "battler",
+      "to": "beatrice",
+      "kind": "关联"
+    },
+    {
+      "from": "ange",
+      "to": "bern",
+      "kind": "对立"
+    }
+  ],
+  "tips": [
+    "建议先完整体验游戏提供的互动与分歧，再阅读本站的终章档案。",
+    "结局选择可分别记录，不必只保留一次的印象。",
+    "回看 EP1 的第一份笔记，比直接读网上终极解析更有价值。"
+  ],
+  "tea": [
+    "最终章需要单独记录你选择的结局路径；不同阅读版本的呈现可能有所差异。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "virgilia",
+      "name": "瓦尔基莉亚",
+      "role": "与魔女相关的人物",
+      "group": "叙事"
+    },
+    {
+      "id": "eva_beatrice",
+      "name": "EVA-贝阿朵莉切",
+      "role": "与绘羽有关的魔女形象",
+      "group": "叙事"
+    },
+    {
+      "id": "ange",
+      "name": "右代宫缘寿",
+      "role": "战人的妹妹",
+      "group": "家族"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "erika",
+      "name": "古户绘梨花",
+      "role": "参与推理的新人物",
+      "group": "其他"
+    },
+    {
+      "id": "dlanor",
+      "name": "德拉诺尔",
+      "role": "审判者角色",
+      "group": "其他"
+    },
+    {
+      "id": "hachijo",
+      "name": "八城十八",
+      "role": "与手稿有关的人物",
+      "group": "其他"
+    },
+    {
+      "id": "willard",
+      "name": "威拉德·H·莱特",
+      "role": "调查者",
+      "group": "其他"
+    },
+    {
+      "id": "lion",
+      "name": "右代宫理御",
+      "role": "另一种世界呈现中的成员",
+      "group": "家族"
+    }
+  ]
+}

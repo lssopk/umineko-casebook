@@ -1,0 +1,316 @@
+{
+  "id": 4,
+  "title": "黄金魔女的联盟",
+  "en": "Alliance of the Golden Witch",
+  "lead": "围绕六轩岛事件的后续记忆、人物的成长经历以及寻求过去的旅程，叙事向更多时间与立场展开。",
+  "overview": [
+    "右代宫缘寿的视角成为重要支柱，1986 年之外的时间线获得较大篇幅。",
+    "真里亚的日记及与魔法有关的记忆，构成理解人物情感的一条线索。",
+    "缘寿寻找六轩岛事件答案的行动，与战人的棋盘交锋形成双线叙事。",
+    "前四章的核心问题在本章被进一步集中，读者可以首次对问题篇做阶段性复盘。"
+  ],
+  "events": [
+    {
+      "time": "另一时间线",
+      "title": "缘寿的生活",
+      "text": "介绍六轩岛事件之后，缘寿所承受的处境。",
+      "kind": "人物"
+    },
+    {
+      "time": "回忆与记录",
+      "title": "真里亚的日记",
+      "text": "日记如何保存情感、故事与经验成为重要议题。",
+      "kind": "线索"
+    },
+    {
+      "time": "追寻过程",
+      "title": "调查过去",
+      "text": "缘寿通过记录和接触相关人员追寻六轩岛。",
+      "kind": "调查"
+    },
+    {
+      "time": "1986 棋盘",
+      "title": "新一轮事件",
+      "text": "魔女与战人再次争夺事件的解释。",
+      "kind": "命案"
+    },
+    {
+      "time": "问题篇结尾",
+      "title": "阶段性对照",
+      "text": "多个章节之间的共同点与差异被凸显。",
+      "kind": "推理"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP4-01",
+      "title": "双时间线",
+      "question": "当下与过去的消息来源是否独立？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP4-02",
+      "title": "日记的证据性",
+      "question": "日记能证明作者的想法，还是也能证明事件真实发生？",
+      "kind": "证词"
+    },
+    {
+      "id": "EP4-03",
+      "title": "重复场景",
+      "question": "不同棋盘出现的共同结构是什么？",
+      "kind": "线索"
+    },
+    {
+      "id": "EP4-04",
+      "title": "前四章整理",
+      "question": "哪些假说在所有问题篇都能成立？",
+      "kind": "推理"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "ange",
+      "to": "battler",
+      "kind": "亲属"
+    },
+    {
+      "from": "ange",
+      "to": "maria",
+      "kind": "关联"
+    },
+    {
+      "from": "battler",
+      "to": "beatrice",
+      "kind": "对立"
+    }
+  ],
+  "tips": [
+    "使用两条时间线，不要把事件年代混在一起。",
+    "通关后暂停片刻，把 EP1—EP4 的共通规则单独列出。",
+    "对“愿意相信”与“已经证明”的命题分别编号。"
+  ],
+  "tea": [
+    "茶会和里茶会阅读完成后，尝试给前四章写一份“目前能确定 / 尚不能确定”表。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "ange",
+      "name": "右代宫缘寿",
+      "role": "战人的妹妹",
+      "group": "家族"
+    },
+    {
+      "id": "virgilia",
+      "name": "瓦尔基莉亚",
+      "role": "与魔女相关的人物",
+      "group": "叙事"
+    },
+    {
+      "id": "eva_beatrice",
+      "name": "EVA-贝阿朵莉切",
+      "role": "与绘羽有关的魔女形象",
+      "group": "叙事"
+    }
+  ]
+}

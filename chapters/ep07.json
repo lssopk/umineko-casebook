@@ -1,0 +1,310 @@
+{
+  "id": 7,
+  "title": "黄金魔女的安魂曲",
+  "en": "Requiem of the Golden Witch",
+  "lead": "一个不同的六轩岛世界成为调查舞台，威拉德与理御共同追寻黄金魔女传说背后的人物经历。",
+  "overview": [
+    "这一章刻意呈现不同于前面棋盘的前提，以另一种方式展开探索。",
+    "威拉德·H·莱特作为调查者，与右代宫理御共同追寻家族历史。",
+    "金藏、贝阿朵莉切和六轩岛的过去获得集中回顾。",
+    "部分谜题开始从“物理上怎么可能”转换成“人物经历如何通向这里”。"
+  ],
+  "events": [
+    {
+      "time": "开场",
+      "title": "不同世界的设定",
+      "text": "出现与先前各章不同的六轩岛前提。",
+      "kind": "叙事层"
+    },
+    {
+      "time": "委托",
+      "title": "威拉德调查",
+      "text": "威拉德进入新的调查任务。",
+      "kind": "调查"
+    },
+    {
+      "time": "同行",
+      "title": "理御的身份",
+      "text": "理御的存在让家族过往拥有不同的叙述角度。",
+      "kind": "人物"
+    },
+    {
+      "time": "走访",
+      "title": "家族历史",
+      "text": "金藏与黄金魔女传说的来历逐步获得解释。",
+      "kind": "调查"
+    },
+    {
+      "time": "末段",
+      "title": "真相与诠释",
+      "text": "本章将多重证言和过去的经历放在同一个问题之下。",
+      "kind": "推理"
+    }
+  ],
+  "mysteries": [
+    {
+      "id": "EP7-01",
+      "title": "世界前提",
+      "question": "哪些条件与前六章不同？",
+      "kind": "方法"
+    },
+    {
+      "id": "EP7-02",
+      "title": "证言来源",
+      "question": "回忆、转述和调查结果分别属于什么等级？",
+      "kind": "证词"
+    },
+    {
+      "id": "EP7-03",
+      "title": "人物动机",
+      "question": "具体事件与长期动机之间需要怎样连接？",
+      "kind": "人物"
+    },
+    {
+      "id": "EP7-04",
+      "title": "真相的范围",
+      "question": "本章明说了什么，又留下了哪些解释空间？",
+      "kind": "推理"
+    }
+  ],
+  "links": [
+    {
+      "from": "kinzo",
+      "to": "krauss",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "eva",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rudolf",
+      "kind": "亲子"
+    },
+    {
+      "from": "kinzo",
+      "to": "rosa",
+      "kind": "亲子"
+    },
+    {
+      "from": "krauss",
+      "to": "natsuhi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "krauss",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "natsuhi",
+      "to": "jessica",
+      "kind": "亲子"
+    },
+    {
+      "from": "eva",
+      "to": "hideyoshi",
+      "kind": "婚姻"
+    },
+    {
+      "from": "eva",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "hideyoshi",
+      "to": "george",
+      "kind": "亲子"
+    },
+    {
+      "from": "rudolf",
+      "to": "kyrie",
+      "kind": "婚姻"
+    },
+    {
+      "from": "rudolf",
+      "to": "battler",
+      "kind": "亲子"
+    },
+    {
+      "from": "rosa",
+      "to": "maria",
+      "kind": "亲子"
+    },
+    {
+      "from": "george",
+      "to": "shannon",
+      "kind": "关联"
+    },
+    {
+      "from": "jessica",
+      "to": "kanon",
+      "kind": "关联"
+    },
+    {
+      "from": "willard",
+      "to": "lion",
+      "kind": "关联"
+    },
+    {
+      "from": "kinzo",
+      "to": "lion",
+      "kind": "家族"
+    },
+    {
+      "from": "willard",
+      "to": "bern",
+      "kind": "关联"
+    }
+  ],
+  "tips": [
+    "先完整读完，不要在本章中途搜索凶手名单或人物身份。",
+    "本章讨论核心信息，建议把“已明确的事实”和“推断出的解释”分成两栏。",
+    "区别“有一种可能的情形”和“唯一实际发生的情形”。"
+  ],
+  "tea": [
+    "特别注意正篇与茶会对事实的呈现方式可能不同，应独立记录其叙事地位。"
+  ],
+  "characters": [
+    {
+      "id": "kinzo",
+      "name": "右代宫金藏",
+      "role": "右代宫家家主",
+      "group": "家主"
+    },
+    {
+      "id": "krauss",
+      "name": "右代宫藏臼",
+      "role": "长子，本家负责人",
+      "group": "家族"
+    },
+    {
+      "id": "natsuhi",
+      "name": "右代宫夏妃",
+      "role": "藏臼妻子",
+      "group": "家族"
+    },
+    {
+      "id": "jessica",
+      "name": "右代宫朱志香",
+      "role": "藏臼与夏妃之女",
+      "group": "家族"
+    },
+    {
+      "id": "eva",
+      "name": "右代宫绘羽",
+      "role": "金藏长女",
+      "group": "家族"
+    },
+    {
+      "id": "hideyoshi",
+      "name": "右代宫秀吉",
+      "role": "绘羽丈夫",
+      "group": "家族"
+    },
+    {
+      "id": "george",
+      "name": "右代宫让治",
+      "role": "绘羽与秀吉之子",
+      "group": "家族"
+    },
+    {
+      "id": "rudolf",
+      "name": "右代宫留弗夫",
+      "role": "金藏次子",
+      "group": "家族"
+    },
+    {
+      "id": "kyrie",
+      "name": "右代宫雾江",
+      "role": "留弗夫妻子",
+      "group": "家族"
+    },
+    {
+      "id": "battler",
+      "name": "右代宫战人",
+      "role": "留弗夫之子",
+      "group": "家族"
+    },
+    {
+      "id": "rosa",
+      "name": "右代宫楼座",
+      "role": "金藏次女",
+      "group": "家族"
+    },
+    {
+      "id": "maria",
+      "name": "右代宫真里亚",
+      "role": "楼座之女",
+      "group": "家族"
+    },
+    {
+      "id": "genji",
+      "name": "吕之上源次",
+      "role": "管家",
+      "group": "使用人"
+    },
+    {
+      "id": "shannon",
+      "name": "纱音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kanon",
+      "name": "嘉音",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "kumasawa",
+      "name": "熊泽千代",
+      "role": "使用人",
+      "group": "使用人"
+    },
+    {
+      "id": "gohda",
+      "name": "乡田俊朗",
+      "role": "厨师",
+      "group": "使用人"
+    },
+    {
+      "id": "nanjo",
+      "name": "南条辉正",
+      "role": "家庭医生",
+      "group": "其他"
+    },
+    {
+      "id": "beatrice",
+      "name": "贝阿朵莉切",
+      "role": "自称黄金魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "bern",
+      "name": "贝伦卡斯泰露",
+      "role": "奇迹的魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "lambda",
+      "name": "拉姆达戴露塔",
+      "role": "魔女",
+      "group": "叙事"
+    },
+    {
+      "id": "willard",
+      "name": "威拉德·H·莱特",
+      "role": "调查者",
+      "group": "其他"
+    },
+    {
+      "id": "lion",
+      "name": "右代宫理御",
+      "role": "另一种世界呈现中的成员",
+      "group": "家族"
+    }
+  ]
+}
