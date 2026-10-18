@@ -118,3 +118,29 @@ python test_site.py   # 仅开发测试，依赖 Playwright + Chromium
 ## 资料与版权
 
 请参阅 [docs/SOURCES.md](docs/SOURCES.md)。本站为独立的读书/游戏调查笔记工具，非游戏的官方或授权再发布版本。所有概述以原创简述为主，未打包游戏 CG、立绘、音乐或游戏正文。
+
+
+## 管理员登录、每章讨论与 Codex/AI（v2）
+
+本项目现在使用**管理员密码**保护网页、章节与留言。首次安装/升级运行 `./deploy.sh`，会在公网启动前检测并要求设置至少 12 字符的密码；旧浏览器的章节进度会在登录后保留并同步解锁上限。
+
+**AI 的两种工作方式**：
+
+- **站内自动回复（推荐）**：复制 `.env.example` 为 `.env`，配置 **模型 API 密钥** `AI_API_KEY`、`AI_MODEL` 等，重新运行 `./deploy.sh`；内置 worker 每 60 秒检查留言，网页每 30 秒刷新。默认为每天最多 25 次模型回复，**与 ChatGPT Plus/Pro 订阅额度无关**，会按 API 提供商收费。
+- **外部 Codex / Agent**：通过 `docker compose exec casebook node manage.js create-key --name codex` 创建独立可撤销 Token，然后让长期运行的 Agent 按 [AI 操作指南](docs/AI_OPERATIONS.md) 每分钟查询任务、提交回复、编辑当前已解锁章节。不必把管理员密码交给 AI；Codex 云端单次运行不会自动变成常驻服务。
+
+每一章都有留言表单；「个人推理室」新建假说也会同步进服务器，供 AI 逐条论证。对“内容太简单”的留言，AI 可以提出具体扩写建议；内置 worker 默认**只回复建议**，不会修改旧章节。设置 `AI_AUTO_EDIT=1` 才会把未核验的 AI 扩写作为新段落追加进当前章节概览；外部授权智能体可 PATCH 每章 `lead/overview/events/mysteries/characters/links/tips/tea` 等字段，修改持久保存在专属 Docker volume 中。**所有改写都必须严格防止后续章节剧透。**
+
+- AI 规范：[docs/AI_OPERATIONS.md](docs/AI_OPERATIONS.md)
+- Codex 自动发现：[AGENTS.md](AGENTS.md)
+- 站点配置示例：[.env.example](.env.example)
+- 更改管理员密码：`docker compose exec -T casebook node manage.js set-password --stdin`，须从标准输入提供新密码。
+
+### 完全卸载（会删除全部服务器数据）
+
+```bash
+cd ~/umineko-casebook
+bash ./uninstall.sh --purge
+```
+
+按提示键入 **`DELETE-UMINEKO`**。此命令将删除本项目的 Docker 容器、专用镜像、Compose 数据卷（包含管理员密码、AI Token、章节编辑和讨论消息）及项目目录；不可恢复。不会删除其他 Docker 项目、全局 Docker 安装、GitHub 仓库、外部备份或浏览器中原有的 LocalStorage 笔记。反向代理及防火墙规则需另行清理。
