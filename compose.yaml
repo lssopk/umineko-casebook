@@ -3,7 +3,8 @@ services:
     build: .
     container_name: umineko-casebook
     ports:
-      - "${BIND_ADDR:-127.0.0.1}:${PORT:-5699}:5699"
+      # 默认监听所有 IPv4 网络接口的 5699 端口；可设 BIND_ADDR=127.0.0.1 改为仅本机
+      - "${BIND_ADDR:-0.0.0.0}:${PORT:-5699}:5699"
     volumes:
       - casebook-state:/app/state
     restart: unless-stopped
