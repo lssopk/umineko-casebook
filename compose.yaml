@@ -3,8 +3,17 @@ services:
     build: .
     container_name: umineko-casebook
     ports:
-      # 默认监听所有 IPv4 网络接口的 5699 端口；可设 BIND_ADDR=127.0.0.1 改为仅本机
       - "${BIND_ADDR:-0.0.0.0}:${PORT:-5699}:5699"
+    environment:
+      PORT: "5699"
+      HOST: "0.0.0.0"
+      STATE_DIR: /app/state
+      PUBLIC_HTTPS: "${PUBLIC_HTTPS:-0}"
+      AI_API_KEY: "${AI_API_KEY:-}"
+      AI_BASE_URL: "${AI_BASE_URL:-https://api.openai.com/v1}"
+      AI_MODEL: "${AI_MODEL:-gpt-4.1-mini}"
+      AI_DAILY_LIMIT: "${AI_DAILY_LIMIT:-25}"
+      AI_AUTO_EDIT: "${AI_AUTO_EDIT:-0}"
     volumes:
       - casebook-state:/app/state
     restart: unless-stopped

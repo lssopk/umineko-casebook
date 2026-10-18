@@ -1,6 +1,6 @@
 FROM node:22-alpine
 WORKDIR /app
-COPY server.js ./
+COPY server.js room.js manage.js ./
 COPY public ./public
 COPY chapters ./chapters
 RUN mkdir -p /app/state && chown -R node:node /app
