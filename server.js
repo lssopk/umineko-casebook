@@ -50,6 +50,7 @@ const server=http.createServer(async(req,res)=>{
    try{return await room.handle(req,res,p,parseProgress)}catch(e){console.error('[room]',e);return json(res,400,{error:'room_request_failed'})}
  }
  const user=room.auth(req);
+ if(user?.type==='admin' && req.method==='GET')room.syncProgress(parseProgress(req));
  const isPublicAsset=req.method==='GET'&&['/login.js','/style.css','/favicon.svg'].includes(p);
  if(!user||user.type!=='admin'){
    if((p==='/'||p==='/index.html'||p==='/login.html')&&req.method==='GET'){
