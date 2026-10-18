@@ -15,20 +15,28 @@
 
 ## VPS 一键部署（端口 5699）
 
-环境：Linux VPS（Debian/Ubuntu 优先），已安装 Docker Engine 和 Docker Compose v2。
+环境：Linux VPS（Debian/Ubuntu 优先），已安装 Git、Docker Engine 和 Docker Compose v2。
 
-**方式一：直接使用本次 ZIP**
+**方式一：公共仓库一键安装/更新（推荐）**
 
 ```bash
-unzip umineko-casebook-v1.0.zip
+curl -fsSL https://raw.githubusercontent.com/lssopk/umineko-casebook/main/install.sh | bash
+```
+
+无需 GitHub SSH 公钥。默认安装路径 `~/umineko-casebook`，已有安装会使用 `git pull --ff-only` 更新并重建 Docker 容器，不删除 Docker volume 数据。默认公网绑定 `0.0.0.0:5699`。如果要恢复仅本机绑定，可进入项目执行 `BIND_ADDR=127.0.0.1 ./deploy.sh`。
+
+**方式二：手动 HTTPS 克隆**
+
+```bash
+git clone https://github.com/lssopk/umineko-casebook.git
 cd umineko-casebook
 ./deploy.sh
 ```
 
-**方式二：从 GitHub 私有仓库部署（需要服务器有仓库访问权限）**
+**方式三：使用下载的 ZIP**
 
 ```bash
-git clone git@github.com:lssopk/umineko-casebook.git
+unzip umineko-casebook-v1.0.zip
 cd umineko-casebook
 ./deploy.sh
 ```
