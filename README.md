@@ -25,25 +25,31 @@ cd umineko-casebook
 ./deploy.sh
 ```
 
-**方式二：推送到 GitHub 后从仓库部署**
+**方式二：从 GitHub 私有仓库部署（需要服务器有仓库访问权限）**
 
 ```bash
-git clone https://github.com/<你的用户名>/<仓库名>.git
-cd <仓库名>
+git clone git@github.com:lssopk/umineko-casebook.git
+cd umineko-casebook
 ./deploy.sh
 ```
 
-默认 `127.0.0.1:5699`，只接受 VPS 本机访问，适合你自己配置 Nginx/Caddy 反代：
+**现在默认监听 `0.0.0.0:5699`，可从 VPS 公网 IPv4 的 5699 端口访问。** 部署脚本在 UFW/firewalld 已启用时会尝试放行 TCP 5699；若 VPS 提供商有安全组、上游防火墙，请另外放行 TCP 5699。
 
 ```text
-archive.rui.lv -> http://127.0.0.1:5699
+http://<VPS公网IP>:5699
 ```
 
-如果反向代理不在同一 VPS，需要公网监听（建议先配置防火墙）：
+健康检查：`curl http://127.0.0.1:5699/healthz`。
+
+**如果与 Nginx/Caddy 反向代理部署在同一 VPS，建议仅绑定本机：**
 
 ```bash
-BIND_ADDR=0.0.0.0 PORT=5699 ./deploy.sh
+BIND_ADDR=127.0.0.1 ./deploy.sh
 ```
+
+此时反代目标为 `http://127.0.0.1:5699`。如果是**独立 Docker 容器内的 Nginx Proxy Manager**，容器内的 `127.0.0.1` 不是 VPS 主机，应配置正确的 Docker 网络或可达的宿主机 IP。
+
+**安全注意**：本站没有用户账户密码，任何能访问网页的人都可以自行确认并解锁章节；直接公网开放仅适合你愿意共享的内容。建议使用 HTTPS 反向代理和访问控制，不要将 VPS 管理端口一起开放。默认监听所有网络**接口**，并不是监听所有 TCP 端口；服务端口仍为 **5699**。
 
 升级代码：进入项目目录，`git pull && ./deploy.sh`。
 
