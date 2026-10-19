@@ -118,12 +118,13 @@ async function renderDiscussion(target){const d=state.chapter,container=$(target
  if(container.dataset.discussionEpisode!==String(d.id)){container.innerHTML=discussionMarkup(target);container.dataset.discussionEpisode=String(d.id)}
  try{const data=await api('/api/room/'+d.id+'/messages');if(!$(target+'List'))return;
   $(target+'Meta').textContent=(data.aiEnabled?'AI 自动轮询已配置':'尚未配置内置 AI；Codex 等外部智能体仍可通过 API 回应')+' · '+data.pendingJobs+' 条待处理';
-  $(target+'List').innerHTML=data.messages.length?data.messages.slice(-70).map(m=>`<article class="discussion-card ${m.author==='agent'?'agent':''}"><small>${m.author==='agent'?'✧ AI 推理伙伴':'◈ 玩家'} · ${esc(m.type)} · ${esc(m.createdAt.slice(0,16).replace('T',' '))} ${m.parentId?'· 回复 '+esc(m.parentId.slice(0,9)):''}</small><p>${esc(m.content)}</p><button type="button" class="button tiny muted" data-discussion-reply="${esc(m.id)}" data-discussion-target="${target}">回复此条 ↩</button></article>`).join(''):'<div class="empty">本章暂无讨论。说出你真正怀疑的地方，试试让 AI 提供另一种推理。</div>';
+  $(target+'List').innerHTML=data.messages.length?data.messages.slice(-70).map(m=>`<article class="discussion-card ${m.author==='agent'?'agent':''}"><small>${m.author==='agent'?'✧ AI 推理伙伴':'◈ 玩家'} · ${esc(m.type)} · ${esc(m.createdAt.slice(0,16).replace('T',' '))} ${m.parentId?'· 回复 '+esc(m.parentId.slice(0,9)):''}</small><p>${esc(m.content)}</p><button type="button" class="button tiny muted" data-discussion-reply="${esc(m.id)}" data-discussion-target="${target}">回复此条 ↩</button><button type="button" class="button tiny muted" data-discussion-delete="${esc(m.id)}" data-discussion-target="${target}">删除留言</button></article>`).join(''):'<div class="empty">本章暂无讨论。说出你真正怀疑的地方，试试让 AI 提供另一种推理。</div>';
  }catch(err){if($(target+'Meta'))$(target+'Meta').textContent='无法加载讨论：'+err.message}
 }
 function setupHandlers(){
  document.addEventListener('click',ev=>{
   const reply=ev.target.closest('[data-discussion-reply]');if(reply){const form=document.querySelector('#'+reply.dataset.discussionTarget+' form');if(form){form.elements.parentId.value=reply.dataset.discussionReply;form.elements.content.focus();form.scrollIntoView({behavior:'smooth',block:'center'});toast('正在回复选中的讨论')}return}
+  const del=ev.target.closest('[data-discussion-delete]');if(del){if(!confirm('确定永久删除这条留言及其全部回复？关联的待处理 AI 任务也会取消。'))return;try{await api('/api/room/'+state.chapter.id+'/messages/'+del.dataset.discussionDelete,{method:'DELETE'});toast('留言及其回复已删除');renderDiscussion(del.dataset.discussionTarget)}catch(err){toast('删除失败：'+err.message)}return}
   const episode=ev.target.closest('[data-episode]');if(episode){openEpisode(Number(episode.dataset.episode));return}
   const tab=ev.target.closest('[data-tab]');if(tab){renderChapterTab(tab.dataset.tab);return}
   const page=ev.target.closest('[data-page]');if(page){setPage(page.dataset.page);return}
