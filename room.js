@@ -48,6 +48,22 @@ function updateChapter(n,changes){
 }
 function addMessage(s,episodeId,author,type,content,parentId=null,jobId=null){let m={id:'m_'+tag(),episode:episodeId,author,type,content,createdAt:new Date().toISOString(),parentId,jobId};s.messages.push(m);return m}
 function queue(s,m){const j={id:'j_'+tag(),messageId:m.id,episode:m.episode,status:'pending',attempts:0,createdAt:m.createdAt};s.jobs.push(j);return j}
+const AI_LOG=path.join(STATE,'ai-logs.json');
+function audit(event,details={}){
+ const entries=read(AI_LOG,[]);
+ const safe={};
+ for(const [key,val] of Object.entries(details)){
+  if(['key','token','authorization','password','prompt','content','reply'].includes(key.toLowerCase()))continue;
+  safe[key]=typeof val==='string'?val.slice(0,350):val;
+ }
+ entries.push({time:new Date().toISOString(),event,...safe});
+ write(AI_LOG,entries.slice(-500));
+}
+function modelSettings(){
+ const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\\/$/,'');
+ const key=process.env.AI_API_KEY||'';
+ return {enabled:!!key,baseUrl:base,model:process.env.AI_MODEL||'gpt-4.1-mini',dailyLimit:Number(process.env.AI_DAILY_LIMIT||25),autoEdit:process.env.AI_AUTO_EDIT==='1',pollSeconds:60,keyConfigured:!!key,keyHint:key?'已配置（不显示密钥）':'未配置'};
+}
 const NO_CACHE={'Cache-Control':'no-store'};
 const statuses={pending:'pending',claimed:'claimed',done:'done',failed:'failed'};
 async function handle(req,res,p,progress){
@@ -58,6 +74,24 @@ async function handle(req,res,p,progress){
  if(req.method!=='GET'&&req.method!=='HEAD'&&!csrfOk(req,a)){response(res,403,{error:'csrf_failed'});return true}
  if(p==='/api/auth/logout'&&req.method==='POST'){
   const secure=process.env.PUBLIC_HTTPS==='1'?'; Secure':'';response(res,200,{ok:true},{'Set-Cookie':`cb_admin=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0${secure}`});return true}
+ if(p==='/api/admin/ai/status'&&req.method==='GET'){
+  if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
+  const s=state();response(res,200,{config:modelSettings(),worker:{busy,dailyCount:daily.count,dailyDate:daily.date,lastAttempt:lastMinute?new Date(lastMinute).toISOString():null},queue:{pending:s.jobs.filter(j=>j.status==='pending').length,claimed:s.jobs.filter(j=>j.status==='claimed').length,done:s.jobs.filter(j=>j.status==='done').length,failed:s.jobs.filter(j=>j.status==='failed').length},recentJobs:s.jobs.slice(-20).reverse().map(j=>({id:j.id,episode:j.episode,status:j.status,attempts:j.attempts,createdAt:j.createdAt,completedAt:j.completedAt,error:j.error||null})),logs:read(AI_LOG,[]).slice(-100).reverse()});return true;
+ }
+ if(p==='/api/admin/ai/test'&&req.method==='POST'){
+  if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
+  const cfg=modelSettings();if(!cfg.enabled){audit('connection_test',{success:false,reason:'no_api_key'});return response(res,400,{ok:false,error:'AI_API_KEY 未配置'}),true}
+  if(!cfg.baseUrl.startsWith('https://'))return response(res,400,{ok:false,error:'AI_BASE_URL 必须使用 HTTPS'}),true;
+  const started=Date.now(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+  try{
+   const result=await fetch(cfg.baseUrl+'/models/'+encodeURIComponent(cfg.model),{headers:{Authorization:'Bearer '+process.env.AI_API_KEY},signal:controller.signal});
+   const requestId=result.headers.get('x-request-id')||null;
+   if(!result.ok){audit('connection_test',{success:false,httpStatus:result.status,model:cfg.model,requestId,durationMs:Date.now()-started});return response(res,200,{ok:false,httpStatus:result.status,requestId,durationMs:Date.now()-started,message:'模型接口未通过验证，请检查 API 密钥、地址及模型权限'}),true}
+   const data=await result.json();
+   audit('connection_test',{success:true,httpStatus:result.status,model:data.id||cfg.model,requestId,durationMs:Date.now()-started});
+   response(res,200,{ok:true,model:data.id||cfg.model,httpStatus:result.status,requestId,durationMs:Date.now()-started,message:'模型元数据接口已连接成功；实际生成仍需提交留言测试'});return true;
+  }catch(e){audit('connection_test',{success:false,error:e.name==='AbortError'?'timeout':'network_error',durationMs:Date.now()-started});response(res,200,{ok:false,error:e.name==='AbortError'?'连接超时':'网络连接失败',durationMs:Date.now()-started});return true}finally{clearTimeout(timer)}
+ }
  if(p==='/api/agent/me'&&req.method==='GET'){response(res,200,{ok:true,actor:a.type,scopes:a.scopes||['*'],maxEpisode:state().maxEpisode});return true}
  if(p==='/api/agent/jobs'&&req.method==='GET'){
   if(!allowed(a,'jobs:read'))return response(res,403,{error:'scope_denied'}),true;
@@ -103,7 +137,7 @@ async function pollModel(){
  const cap=Math.max(0,Math.min(300,Number(process.env.AI_DAILY_LIMIT||25)));if(daily.count>=cap)return;
  const s=state();const j=s.jobs.find(x=>(x.status==='pending'||x.status==='claimed'&&x.leaseUntil<Date.now())&&x.episode<=s.maxEpisode);if(!j)return;
  if(Date.now()-lastMinute<55000)return;busy=true;lastMinute=Date.now();daily.count++;
- j.status='claimed';j.leaseUntil=Date.now()+180000;j.claimedBy='built-in-worker';j.attempts++;persist(s);
+ j.status='claimed';j.leaseUntil=Date.now()+180000;j.claimedBy='built-in-worker';j.attempts++;persist(s);audit('job_started',{jobId:j.id,episode:j.episode,model:process.env.AI_MODEL||'gpt-4.1-mini',attempt:j.attempts});
  try{
   const msg=s.messages.find(x=>x.id===j.messageId),ch=getChapter(j.episode);
   const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\/$/,'');if(!base.startsWith('https://'))throw Error('AI_BASE_URL must use HTTPS');
@@ -122,9 +156,9 @@ async function pollModel(){
      updateChapter(j.episode,{overview:[...before.overview,'【AI 扩写草稿｜未人工核验，请警惕剧透】\n'+reply.slice(0,3500)]});job.autoEdited=true;
     }
    }
-   persist(next)}
+   persist(next);audit('job_succeeded',{jobId:j.id,episode:j.episode,model:process.env.AI_MODEL||'gpt-4.1-mini',autoEdited:!!job.autoEdited,usage:output.usage?{promptTokens:output.usage.prompt_tokens,completionTokens:output.usage.completion_tokens,totalTokens:output.usage.total_tokens}:null});}
  }catch(e){const next=state(),job=next.jobs.find(x=>x.id===j.id);if(job?.status==='claimed'&&job.claimedBy==='built-in-worker'){
-  job.status=job.attempts<3?'pending':'failed';job.error=String(e.message).slice(0,200);persist(next)}console.error('[AI worker]',String(e.message))}finally{busy=false}
+  job.status=job.attempts<3?'pending':'failed';job.error=String(e.message).slice(0,200);persist(next)}audit('job_failed',{jobId:j.id,episode:j.episode,error:String(e.message).slice(0,180)});console.error('[AI worker]',String(e.message))}finally{busy=false}
 }
 function startWorker(){setTimeout(()=>pollModel().catch(console.error),12000).unref();setInterval(()=>pollModel().catch(console.error),60000).unref()}
 module.exports={auth,allowed,handle,login,publicSession,response,getChapter,syncProgress,startWorker};
