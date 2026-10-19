@@ -25,7 +25,7 @@ const allowed=(a,scope)=>a?.type==='admin'||(a?.type==='agent'&&a.scopes.include
 const originOk=req=>{const origin=req.headers.origin;if(!origin)return true;try{return new URL(origin).host===req.headers.host}catch{return false}};
 const csrfOk=(req,a)=>a?.type==='agent'||(a?.type==='admin'&&safeEqual(req.headers['x-csrf-token'],a.csrf)&&originOk(req));
 const loginAttempts=new Map();
-const publicSession=(req,res)=>{const a=auth(req);response(res,200,{authenticated:!!a&&a.type==='admin',configured:!!admin().password,csrf:a?.type==='admin'?a.csrf:null,agentEnabled:!!process.env.AI_API_KEY,intervalSeconds:60});};
+const publicSession=(req,res)=>{const a=auth(req);response(res,200,{authenticated:!!a&&a.type==='admin',configured:!!admin().password,csrf:a?.type==='admin'?a.csrf:null,agentEnabled:!!aiConfig().key,intervalSeconds:60});};
 const login=async(req,res)=>{if(!originOk(req))return response(res,403,{error:'origin_rejected'});const ip=req.socket.remoteAddress||'unknown';let v=loginAttempts.get(ip)||{count:0,at:0};if(v.count>=8&&Date.now()-v.at<900000)return response(res,429,{error:'too_many_attempts'});const data=await body(req,2048);const password=data.password;if(typeof password!=='string'||password.length>1024)return response(res,400,{error:'invalid_password'});const cfg=admin();if(!cfg.password)return response(res,503,{error:'admin_not_configured'});
  const pw=cfg.password;let good=false;try{good=safeEqual(crypto.scryptSync(password,Buffer.from(pw.salt,'hex'),32).toString('hex'),pw.hash)}catch{}
  if(!good){loginAttempts.set(ip,{count:v.count+1,at:Date.now()});return response(res,401,{error:'invalid_password'})}
@@ -48,7 +48,12 @@ function updateChapter(n,changes){
 }
 function addMessage(s,episodeId,author,type,content,parentId=null,jobId=null){let m={id:'m_'+tag(),episode:episodeId,author,type,content,createdAt:new Date().toISOString(),parentId,jobId};s.messages.push(m);return m}
 function queue(s,m){const j={id:'j_'+tag(),messageId:m.id,episode:m.episode,status:'pending',attempts:0,createdAt:m.createdAt};s.jobs.push(j);return j}
-const AI_LOG=path.join(STATE,'ai-logs.json');
+const AI_LOG=path.join(STATE,'ai-logs.json'),AI_CONFIG=path.join(STATE,'ai-config.json');
+function aiConfig(){
+ const override=read(AI_CONFIG,{});
+ return {baseUrl:override.baseUrl||process.env.AI_BASE_URL||'https://api.openai.com/v1',model:override.model||process.env.AI_MODEL||'gpt-4.1-mini',key:override.key??process.env.AI_API_KEY??'',dailyLimit:override.dailyLimit??Number(process.env.AI_DAILY_LIMIT||25),autoEdit:override.autoEdit??(process.env.AI_AUTO_EDIT==='1')};
+}
+
 function audit(event,details={}){
  const entries=read(AI_LOG,[]);
  const safe={};
@@ -60,9 +65,7 @@ function audit(event,details={}){
  write(AI_LOG,entries.slice(-500));
 }
 function modelSettings(){
- const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\/$/,'');
- const key=process.env.AI_API_KEY||'';
- return {enabled:!!key,baseUrl:base,model:process.env.AI_MODEL||'gpt-4.1-mini',dailyLimit:Number(process.env.AI_DAILY_LIMIT||25),autoEdit:process.env.AI_AUTO_EDIT==='1',pollSeconds:60,keyConfigured:!!key,keyHint:key?'已配置（不显示密钥）':'未配置'};
+ const c=aiConfig();return {enabled:!!c.key,baseUrl:c.baseUrl.replace(/\/$/,''),model:c.model,dailyLimit:c.dailyLimit,autoEdit:c.autoEdit,pollSeconds:60,keyConfigured:!!c.key,keyHint:c.key?'已配置（不显示密钥）':'未配置'};
 }
 const NO_CACHE={'Cache-Control':'no-store'};
 const statuses={pending:'pending',claimed:'claimed',done:'done',failed:'failed'};
@@ -78,19 +81,32 @@ async function handle(req,res,p,progress){
   if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
   const s=state();response(res,200,{config:modelSettings(),worker:{busy,dailyCount:daily.count,dailyDate:daily.date,lastAttempt:lastMinute?new Date(lastMinute).toISOString():null},queue:{pending:s.jobs.filter(j=>j.status==='pending').length,claimed:s.jobs.filter(j=>j.status==='claimed').length,done:s.jobs.filter(j=>j.status==='done').length,failed:s.jobs.filter(j=>j.status==='failed').length},recentJobs:s.jobs.slice(-20).reverse().map(j=>({id:j.id,episode:j.episode,status:j.status,attempts:j.attempts,createdAt:j.createdAt,completedAt:j.completedAt,error:j.error||null})),logs:read(AI_LOG,[]).slice(-100).reverse()});return true;
  }
+ if(p==='/api/admin/ai/config'&&req.method==='PUT'){
+  if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
+  const d=await body(req,12000),current=aiConfig();
+  if(typeof d.baseUrl!=='string'||typeof d.model!=='string'||!Number.isInteger(d.dailyLimit)||typeof d.autoEdit!=='boolean')return response(res,400,{error:'invalid_config'}),true;
+  let u;try{u=new URL(d.baseUrl)}catch{return response(res,400,{error:'invalid_url'}),true}
+  if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||d.baseUrl.length>300||d.model.length>120||!d.model.trim()||d.dailyLimit<0||d.dailyLimit>300)return response(res,400,{error:'invalid_config'}),true;
+  if(d.key!==undefined&&d.key!==null&&(typeof d.key!=='string'||d.key.length>500))return response(res,400,{error:'invalid_key'}),true;
+  const key=d.clearKey?'':(d.key||current.key);
+  write(AI_CONFIG,{baseUrl:d.baseUrl.replace(/\/$/,''),model:d.model.trim(),key,dailyLimit:d.dailyLimit,autoEdit:d.autoEdit});
+  audit('config_updated',{model:d.model,baseUrl:d.baseUrl,keyChanged:!!d.key||!!d.clearKey});
+  response(res,200,{ok:true,config:modelSettings()});return true;
+ }
  if(p==='/api/admin/ai/test'&&req.method==='POST'){
   if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
   const cfg=modelSettings();if(!cfg.enabled){audit('connection_test',{success:false,reason:'no_api_key'});return response(res,400,{ok:false,error:'AI_API_KEY 未配置'}),true}
   if(!cfg.baseUrl.startsWith('https://'))return response(res,400,{ok:false,error:'AI_BASE_URL 必须使用 HTTPS'}),true;
-  const started=Date.now(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+  const started=Date.now(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),60000);
   try{
-   const result=await fetch(cfg.baseUrl+'/models/'+encodeURIComponent(cfg.model),{headers:{Authorization:'Bearer '+process.env.AI_API_KEY},signal:controller.signal});
+   const result=await fetch(cfg.baseUrl+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:cfg.model,messages:[{role:'user',content:'请只回复：连接成功'}],max_tokens:80}),signal:controller.signal});
    const requestId=result.headers.get('x-request-id')||null;
-   if(!result.ok){audit('connection_test',{success:false,httpStatus:result.status,model:cfg.model,requestId,durationMs:Date.now()-started});return response(res,200,{ok:false,httpStatus:result.status,requestId,durationMs:Date.now()-started,message:'模型接口未通过验证，请检查 API 密钥、地址及模型权限'}),true}
-   const data=await result.json();
-   audit('connection_test',{success:true,httpStatus:result.status,model:data.id||cfg.model,requestId,durationMs:Date.now()-started});
-   response(res,200,{ok:true,model:data.id||cfg.model,httpStatus:result.status,requestId,durationMs:Date.now()-started,message:'模型元数据接口已连接成功；实际生成仍需提交留言测试'});return true;
-  }catch(e){audit('connection_test',{success:false,error:e.name==='AbortError'?'timeout':'network_error',durationMs:Date.now()-started});response(res,200,{ok:false,error:e.name==='AbortError'?'连接超时':'网络连接失败',durationMs:Date.now()-started});return true}finally{clearTimeout(timer)}
+   if(!result.ok){audit('connection_test',{success:false,httpStatus:result.status,model:cfg.model,requestId,durationMs:Date.now()-started});return response(res,200,{ok:false,httpStatus:result.status,requestId,durationMs:Date.now()-started,message:'聊天请求失败：HTTP '+result.status}),true}
+   const data=await result.json(),answer=data.choices?.[0]?.message?.content;
+   if(typeof answer!=='string'||!answer.trim())throw Error('empty_reply');
+   audit('connection_test',{success:true,httpStatus:result.status,model:cfg.model,requestId,durationMs:Date.now()-started,usage:data.usage?{totalTokens:data.usage.total_tokens}:null});
+   response(res,200,{ok:true,model:cfg.model,httpStatus:result.status,requestId,durationMs:Date.now()-started,answer:answer.slice(0,500),usage:data.usage||null,message:'实际聊天生成成功'});return true;
+ }catch(e){audit('connection_test',{success:false,error:e.name==='AbortError'?'timeout':'network_error',durationMs:Date.now()-started});response(res,200,{ok:false,error:e.name==='AbortError'?'连接超时':'网络连接失败',durationMs:Date.now()-started});return true}finally{clearTimeout(timer)}
  }
  if(p==='/api/agent/me'&&req.method==='GET'){response(res,200,{ok:true,actor:a.type,scopes:a.scopes||['*'],maxEpisode:state().maxEpisode});return true}
  if(p==='/api/agent/jobs'&&req.method==='GET'){
@@ -126,13 +142,27 @@ async function handle(req,res,p,progress){
    const parentId=data.parentId||null;if(parentId&&!s.messages.some(m=>m.id===parentId&&m.episode===n))return response(res,400,{error:'invalid_parent'}),true;
    let m=addMessage(s,n,a.type==='admin'?'player':'agent',data.type,content,parentId);if(a.type==='admin'){s.maxEpisode=Math.max(s.maxEpisode,n);queue(s,m)}persist(s);response(res,201,{message:m,queued:a.type==='admin'});return true}
  }
+ const deletion=p.match(/^\/api\/room\/(\d{1,2})\/messages\/(m_[a-f0-9]+)$/);
+ if(deletion&&req.method==='DELETE'){
+  if(a.type!=='admin')return response(res,403,{error:'admin_required'}),true;
+  const n=Number(deletion[1]),id=deletion[2],s=state();
+  if(!episode(n)||n>progress(req))return response(res,403,{error:'episode_locked'}),true;
+  const m=s.messages.find(x=>x.id===id&&x.episode===n);
+  if(!m)return response(res,404,{error:'not_found'}),true;
+  const removed=new Set([id]);let changed=true;
+  while(changed){changed=false;for(const x of s.messages)if(x.parentId&&removed.has(x.parentId)&&!removed.has(x.id)){removed.add(x.id);changed=true}}
+  s.messages=s.messages.filter(x=>!removed.has(x.id));
+  const before=s.jobs.length;s.jobs=s.jobs.filter(j=>!removed.has(j.messageId));
+  persist(s);audit('messages_deleted',{episode:n,count:removed.size,cancelledJobs:before-s.jobs.length});
+  response(res,200,{ok:true,deleted:removed.size});return true;
+ }
  if(p==='/api/agent/summary'&&req.method==='GET'){if(!allowed(a,'jobs:read'))return response(res,403,{error:'scope_denied'}),true;const s=state();response(res,200,{maxEpisode:s.maxEpisode,pending:s.jobs.filter(j=>j.status==='pending').length,claimed:s.jobs.filter(j=>j.status==='claimed').length,done:s.jobs.filter(j=>j.status==='done').length,enabled:!!process.env.AI_API_KEY});return true}
  response(res,404,{error:'not_found'});return true;
 }
 function syncProgress(n,force=false){if(!Number.isInteger(n)||n<0||n>8)return;const s=state();if(force||n>s.maxEpisode){s.maxEpisode=n;persist(s)}}
 let busy=false,lastMinute=0,daily={date:'',count:0};
 async function pollModel(){
- if(busy||!process.env.AI_API_KEY)return;
+ if(busy||!aiConfig().key)return;
  const day=new Date().toISOString().slice(0,10);if(daily.date!==day)daily={date:day,count:0};
  const cap=Math.max(0,Math.min(300,Number(process.env.AI_DAILY_LIMIT||25)));if(daily.count>=cap)return;
  const s=state();const j=s.jobs.find(x=>(x.status==='pending'||x.status==='claimed'&&x.leaseUntil<Date.now())&&x.episode<=s.maxEpisode);if(!j)return;
@@ -140,11 +170,11 @@ async function pollModel(){
  j.status='claimed';j.leaseUntil=Date.now()+180000;j.claimedBy='built-in-worker';j.attempts++;persist(s);audit('job_started',{jobId:j.id,episode:j.episode,model:process.env.AI_MODEL||'gpt-4.1-mini',attempt:j.attempts});
  try{
   const msg=s.messages.find(x=>x.id===j.messageId),ch=getChapter(j.episode);
-  const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\/$/,'');if(!base.startsWith('https://'))throw Error('AI_BASE_URL must use HTTPS');
+  const base=aiConfig().baseUrl.replace(/\/$/,'');if(!base.startsWith('https://'))throw Error('AI_BASE_URL must use HTTPS');
   const sys='你是一位对海猫鸣泣之时非常认真、热爱辩论的推理室伙伴，不是假装真人。只使用提供的EP章节材料和玩家这次的评论；绝不能透露、更不能暗示未来章节和最终真相。认真给出完整、有证据链的推理：①我理解的主张②本章证据③逐步推导④另一种解释和反证⑤可继续检验的问题。不能把角色说法当作绝对事实；如无依据请说明不确定。即便被要求增强章节资料，先给出具体的扩写建议，不可自行编造细节。回复请用中文，约250-700字，像一位平等讨论的推理伙伴，拒绝剧透要求。';
   const prompt=JSON.stringify({episode:j.episode,userMessage:msg,chapter:{title:ch.title,lead:ch.lead,overview:ch.overview,events:ch.events,mysteries:ch.mysteries,tips:ch.tips,tea:ch.tea}},null,0).slice(0,23000);
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),70000);
-  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+process.env.AI_API_KEY,'Content-Type':'application/json'},body:JSON.stringify({model:process.env.AI_MODEL||'gpt-4.1-mini',messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:0.65,max_tokens:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
+  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:process.env.AI_MODEL||'gpt-4.1-mini',messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:0.65,max_tokens:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
   if(!result.ok)throw Error('AI provider HTTP '+result.status);
   const output=await result.json();const reply=text(output.choices?.[0]?.message?.content,13000);if(!reply)throw Error('empty model reply');
   // Load fresh state because player might have posted while awaiting model.
