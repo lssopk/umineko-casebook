@@ -60,7 +60,7 @@ function audit(event,details={}){
  write(AI_LOG,entries.slice(-500));
 }
 function modelSettings(){
- const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\\/$/,'');
+ const base=(process.env.AI_BASE_URL||'https://api.openai.com/v1').replace(/\/$/,'');
  const key=process.env.AI_API_KEY||'';
  return {enabled:!!key,baseUrl:base,model:process.env.AI_MODEL||'gpt-4.1-mini',dailyLimit:Number(process.env.AI_DAILY_LIMIT||25),autoEdit:process.env.AI_AUTO_EDIT==='1',pollSeconds:60,keyConfigured:!!key,keyHint:key?'已配置（不显示密钥）':'未配置'};
 }
