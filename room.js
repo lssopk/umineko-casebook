@@ -164,29 +164,29 @@ let busy=false,lastMinute=0,daily={date:'',count:0};
 async function pollModel(){
  if(busy||!aiConfig().key)return;
  const day=new Date().toISOString().slice(0,10);if(daily.date!==day)daily={date:day,count:0};
- const cap=Math.max(0,Math.min(300,Number(process.env.AI_DAILY_LIMIT||25)));if(daily.count>=cap)return;
+ const cap=Math.max(0,Math.min(300,Number(aiConfig().dailyLimit)));if(daily.count>=cap)return;
  const s=state();const j=s.jobs.find(x=>(x.status==='pending'||x.status==='claimed'&&x.leaseUntil<Date.now())&&x.episode<=s.maxEpisode);if(!j)return;
  if(Date.now()-lastMinute<55000)return;busy=true;lastMinute=Date.now();daily.count++;
- j.status='claimed';j.leaseUntil=Date.now()+180000;j.claimedBy='built-in-worker';j.attempts++;persist(s);audit('job_started',{jobId:j.id,episode:j.episode,model:process.env.AI_MODEL||'gpt-4.1-mini',attempt:j.attempts});
+ j.status='claimed';j.leaseUntil=Date.now()+180000;j.claimedBy='built-in-worker';j.attempts++;persist(s);audit('job_started',{jobId:j.id,episode:j.episode,model:aiConfig().model,attempt:j.attempts});
  try{
   const msg=s.messages.find(x=>x.id===j.messageId),ch=getChapter(j.episode);
   const base=aiConfig().baseUrl.replace(/\/$/,'');if(!base.startsWith('https://'))throw Error('AI_BASE_URL must use HTTPS');
   const sys='你是一位对海猫鸣泣之时非常认真、热爱辩论的推理室伙伴，不是假装真人。只使用提供的EP章节材料和玩家这次的评论；绝不能透露、更不能暗示未来章节和最终真相。认真给出完整、有证据链的推理：①我理解的主张②本章证据③逐步推导④另一种解释和反证⑤可继续检验的问题。不能把角色说法当作绝对事实；如无依据请说明不确定。即便被要求增强章节资料，先给出具体的扩写建议，不可自行编造细节。回复请用中文，约250-700字，像一位平等讨论的推理伙伴，拒绝剧透要求。';
   const prompt=JSON.stringify({episode:j.episode,userMessage:msg,chapter:{title:ch.title,lead:ch.lead,overview:ch.overview,events:ch.events,mysteries:ch.mysteries,tips:ch.tips,tea:ch.tea}},null,0).slice(0,23000);
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),70000);
-  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:process.env.AI_MODEL||'gpt-4.1-mini',messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:0.65,max_tokens:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
+  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:aiConfig().model,messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:0.65,max_tokens:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
   if(!result.ok)throw Error('AI provider HTTP '+result.status);
   const output=await result.json();const reply=text(output.choices?.[0]?.message?.content,13000);if(!reply)throw Error('empty model reply');
   // Load fresh state because player might have posted while awaiting model.
   const next=state(),job=next.jobs.find(x=>x.id===j.id);if(job?.status==='claimed'&&job.claimedBy==='built-in-worker'){
    const m=addMessage(next,j.episode,'agent','reply',reply,msg.id,j.id);job.replyId=m.id;job.status='done';job.completedAt=m.createdAt;
    // Optional, explicitly opt-in draft expansion. Never silently overwrite existing paragraphs.
-   if(msg.type==='improve'&&process.env.AI_AUTO_EDIT==='1'){
+   if(msg.type==='improve'&&aiConfig().autoEdit){
     const before=getChapter(j.episode);if(before.overview.length<195){
      updateChapter(j.episode,{overview:[...before.overview,'【AI 扩写草稿｜未人工核验，请警惕剧透】\n'+reply.slice(0,3500)]});job.autoEdited=true;
     }
    }
-   persist(next);audit('job_succeeded',{jobId:j.id,episode:j.episode,model:process.env.AI_MODEL||'gpt-4.1-mini',autoEdited:!!job.autoEdited,usage:output.usage?{promptTokens:output.usage.prompt_tokens,completionTokens:output.usage.completion_tokens,totalTokens:output.usage.total_tokens}:null});}
+   persist(next);audit('job_succeeded',{jobId:j.id,episode:j.episode,model:aiConfig().model,autoEdited:!!job.autoEdited,usage:output.usage?{promptTokens:output.usage.prompt_tokens,completionTokens:output.usage.completion_tokens,totalTokens:output.usage.total_tokens}:null});}
  }catch(e){const next=state(),job=next.jobs.find(x=>x.id===j.id);if(job?.status==='claimed'&&job.claimedBy==='built-in-worker'){
   job.status=job.attempts<3?'pending':'failed';job.error=String(e.message).slice(0,200);persist(next)}audit('job_failed',{jobId:j.id,episode:j.episode,error:String(e.message).slice(0,180)});console.error('[AI worker]',String(e.message))}finally{busy=false}
 }
