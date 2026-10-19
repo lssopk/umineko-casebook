@@ -144,3 +144,15 @@ bash ./uninstall.sh --purge
 ```
 
 按提示键入 **`DELETE-UMINEKO`**。此命令将删除本项目的 Docker 容器、专用镜像、Compose 数据卷（包含管理员密码、AI Token、章节编辑和讨论消息）及项目目录；不可恢复。不会删除其他 Docker 项目、全局 Docker 安装、GitHub 仓库、外部备份或浏览器中原有的 LocalStorage 笔记。反向代理及防火墙规则需另行清理。
+
+
+### AI 管理后台、连接诊断和运行日志
+
+登录网站后，点击顶部「AI 后台」，或打开 `/ai-admin.html`。此页面需要管理员会话，不向浏览器暴露 API 密钥。
+
+- 查看模型是否配置、模型名、API 基础地址、轮询间隔、每日上限和是否自动编辑章节。
+- 点击「测试模型连接」：服务器请求 `GET {AI_BASE_URL}/models/{AI_MODEL}`，验证网络、Bearer 密钥和模型读取权限，记录 HTTP 状态、耗时与请求 ID；**不生成内容，不代表聊天生成一定成功**。某些 OpenAI 兼容提供商不支持该接口，可能测试失败但聊天正常。
+- 查看待处理、执行中、已完成、失败任务和最近 100 条审计日志。日志保存在 Docker 数据卷 `ai-logs.json`，最多保留 500 条，不记录密钥或对话正文。日志包含模型请求成功/失败、耗时和 Token 用量（提供商返回时）。
+- 在服务器修改 `.env` 的 `AI_API_KEY`、`AI_BASE_URL`、`AI_MODEL` 后运行 `./deploy.sh` 重建容器使配置生效。可用 `docker compose logs --tail=100 casebook` 排查服务器错误。
+
+注意：页面仅展示服务器本机的内置 AI worker 状态。独立 Codex/Agent 的调用不会被统计为内置模型调用；其任务处理结果可在任务列表中查看。
