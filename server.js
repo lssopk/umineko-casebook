@@ -44,7 +44,7 @@ function readBody(req){return new Promise((resolve,reject)=>{let s='';req.on('da
 const server=http.createServer(async(req,res)=>{
  let url;try{url=new URL(req.url,'http://local')}catch{return json(res,400,{error:'bad_url'})}
  const p=url.pathname;
- if(p==='/healthz')return json(res,200,{status:'ok'});
+ if(p==='/healthz')return json(res,200,{status:'ok',build:'casebook-chapter-nav-20261019b'});
  // The login page is public, but archives and all player actions require a session.
  if(p==='/api/auth/status'||p==='/api/auth/login'||p==='/api/auth/logout'||p.startsWith('/api/agent/')||p.startsWith('/api/room/')||p.startsWith('/api/admin/ai/')){
    try{return await room.handle(req,res,p,parseProgress)}catch(e){console.error('[room]',e);return json(res,400,{error:'room_request_failed'})}
@@ -92,6 +92,6 @@ const server=http.createServer(async(req,res)=>{
  const allowed=new Set(['/','/index.html','/style.css','/app.js','/login.js','/favicon.svg','/ai-admin.html','/ai-admin.js']);
  if(!allowed.has(p))return json(res,404,{error:'not_found'});
  const file=path.join(PUBLIC,p==='/'?'index.html':p.slice(1));
- try{const body=fs.readFileSync(file);res.writeHead(200,headers(ct[path.extname(file)]||'application/octet-stream',p==='/app.js'||p==='/style.css'?'public, max-age=600':'no-store'));return res.end(req.method==='HEAD'?undefined:body)}catch{return json(res,404,{error:'not_found'})}
+ try{const body=fs.readFileSync(file);res.writeHead(200,headers(ct[path.extname(file)]||'application/octet-stream','no-store'));return res.end(req.method==='HEAD'?undefined:body)}catch{return json(res,404,{error:'not_found'})}
 });
 server.listen(PORT,HOST,()=>process.stdout.write(`Game Casebook listening on ${HOST}:${PORT}\n`));
