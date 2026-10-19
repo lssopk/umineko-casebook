@@ -122,7 +122,7 @@ async function renderDiscussion(target){const d=state.chapter,container=$(target
  }catch(err){if($(target+'Meta'))$(target+'Meta').textContent='无法加载讨论：'+err.message}
 }
 function setupHandlers(){
- document.addEventListener('click',ev=>{
+ document.addEventListener('click',async ev=>{
   const reply=ev.target.closest('[data-discussion-reply]');if(reply){const form=document.querySelector('#'+reply.dataset.discussionTarget+' form');if(form){form.elements.parentId.value=reply.dataset.discussionReply;form.elements.content.focus();form.scrollIntoView({behavior:'smooth',block:'center'});toast('正在回复选中的讨论')}return}
   const del=ev.target.closest('[data-discussion-delete]');if(del){if(!confirm('确定永久删除这条留言及其全部回复？关联的待处理 AI 任务也会取消。'))return;try{await api('/api/room/'+state.chapter.id+'/messages/'+del.dataset.discussionDelete,{method:'DELETE'});toast('留言及其回复已删除');renderDiscussion(del.dataset.discussionTarget)}catch(err){toast('删除失败：'+err.message)}return}
   const episode=ev.target.closest('[data-episode]');if(episode){openEpisode(Number(episode.dataset.episode));return}
