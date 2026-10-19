@@ -2,7 +2,16 @@
 .ai-shell{max-width:1100px;margin:32px auto;padding:16px}.ai-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.ai-panel{background:var(--panel);border:1px solid var(--line);padding:20px;border-radius:14px;margin:18px 0}.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}.ai-stat{padding:12px;border:1px solid var(--line);border-radius:8px}.ai-stat b{display:block;font-size:22px;margin:6px 0}.ai-table{width:100%;border-collapse:collapse;font-size:12px}.ai-table td,.ai-table th{padding:10px 7px;border-bottom:1px solid var(--line);text-align:left;overflow-wrap:anywhere}.ai-scroll{overflow-x:auto}.ai-status{font-weight:700;color:var(--gold)}.ai-fail{color:#f58e8e}.ai-ok{color:#69caa1}.ai-note{color:var(--secondary);font-size:12px;line-height:1.8}.ai-error{white-space:pre-wrap;overflow-wrap:anywhere}
 </style></head><body><main class="ai-shell"><div class="ai-top"><div><span class="overline">ADMIN / AI OPERATIONS</span><h1>AI 管理后台</h1><p class="ai-note">仅管理员可查看。不会显示模型密钥，也不会在浏览器发送密钥。</p></div><div><a class="button tiny ghost" href="/">返回档案馆</a> <button id="refresh" class="button tiny">刷新状态</button></div></div>
 <div id="error" class="ai-error ai-fail" role="alert"></div>
-<section class="ai-panel"><h2>模型连接</h2><div id="config" class="ai-grid"></div><p class="ai-note">“已配置”只表示服务器有密钥；点击测试才能验证连接。测试使用模型元数据接口，不生成内容，不能保证聊天接口可用。</p><button id="test" class="button accent">测试模型连接</button><p id="testResult" class="ai-status" aria-live="polite"></p></section>
+<section class="ai-panel"><h2>AI 模型配置</h2><p class="ai-note">直接在网页保存到服务器私有数据卷，保存后立即生效，无需重启。密钥不会回显；留空代表保留现有密钥。</p>
+<form id="settings" style="display:grid;gap:12px;max-width:650px">
+<label>API 地址（OpenAI 兼容，HTTPS）<input id="baseUrl" required placeholder="https://api.openai.com/v1"></label>
+<label>模型名称<input id="model" required placeholder="gpt-4.1-mini"></label>
+<label>API 密钥（留空保留原密钥）<input id="key" type="password" autocomplete="new-password" placeholder="输入新的 API Key"></label>
+<label>每日最大调用次数<input id="dailyLimit" type="number" min="0" max="300" required></label>
+<label><input id="autoEdit" type="checkbox"> 允许 AI 将扩写建议追加为未核验草稿</label>
+<label><input id="clearKey" type="checkbox"> 清除已保存的密钥并停用自动回复</label>
+<button type="submit" class="button accent">保存模型配置</button><p id="saveResult" role="status"></p></form></section>
+<section class="ai-panel"><h2>模型连接</h2><div id="config" class="ai-grid"></div><p class="ai-note">“已配置”只表示服务器有密钥；点击测试才能验证连接。测试会真实发送一条聊天消息并显示模型回复，可能消耗少量 Token。</p><button id="test" class="button accent">发送消息测试 AI 回复</button><p id="testResult" class="ai-status" aria-live="polite"></p></section>
 <section class="ai-panel"><h2>任务与轮询</h2><div id="queue" class="ai-grid"></div><h3>最近任务</h3><div class="ai-scroll"><table class="ai-table"><thead><tr><th>时间</th><th>章节</th><th>状态</th><th>次数</th><th>错误</th></tr></thead><tbody id="jobs"></tbody></table></div></section>
 <section class="ai-panel"><h2>AI 运行日志</h2><p class="ai-note">最近 100 条，持久保存在 Docker 数据卷中。记录测试结果、模型调用状态、耗时和 Token 用量，不记录 API 密钥和对话正文。</p><div class="ai-scroll"><table class="ai-table"><thead><tr><th>时间</th><th>事件</th><th>结果</th><th>模型 / 任务</th><th>耗时 / Token</th></tr></thead><tbody id="logs"></tbody></table></div></section>
 <section class="ai-panel"><h2>如何启用</h2><p class="ai-note">在 VPS 的 <code>~/umineko-casebook/.env</code> 中配置 AI_API_KEY、AI_BASE_URL 和 AI_MODEL，然后运行 <code>./deploy.sh</code>。工作器每 60 秒检查一次待办。此后台不会把密钥保存到网页中。</p></section></main><script src="/ai-admin.js" defer></script></body></html>
