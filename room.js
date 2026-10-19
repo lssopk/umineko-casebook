@@ -175,7 +175,7 @@ async function pollModel(){
   const sys=improving?
    '你是视觉小说调查档案编辑器。只允许使用用户已解锁的当前EP及本次提供的章节资料，不得引用、猜测、暗示未来章节。任务是根据玩家要求直接修改原章节对应栏目，不是写建议或评论。严格输出一个JSON对象：{"changes":{"overview":[字符串...],"events":[对象...],"mysteries":[对象...],"tea":[字符串...]}, "summary":"修改简述"}。changes中仅放确实需要修改的字段；overview必须是替换后的完整段落数组，而不是追加建议；events/mysteries必须保留原对象结构和已有事实，逐项丰富但不编造；不得生成Markdown代码块。仅能编辑overview、events、mysteries、tips、tea、lead；不得修改其它字段。若资料不足，保留原文并说明不确定性。不得增加未来章节信息。':
    '你是一位对海猫鸣泣之时认真、热爱辩论的推理室伙伴。只使用提供的EP章节材料和玩家评论；绝不能透露或暗示未来章节。认真给出有证据链的推理、另一种解释和可检验的问题；不能把角色说法当作事实。回复用中文，约250-700字。';
-  const chapterInput={title:ch.title,lead:ch.lead,overview:ch.overview,events:ch.events,mysteries:ch.mysteries,tips:ch.tips,tea:ch.tea};
+  const cleanOverview=(ch.overview||[]).filter(x=>!String(x).includes('【AI 扩写草稿｜未人工核验'));const chapterInput={title:ch.title,lead:ch.lead,overview:cleanOverview,events:ch.events,mysteries:ch.mysteries,tips:ch.tips,tea:ch.tea};
   const prompt=JSON.stringify({episode:j.episode,userRequest:msg.content,chapter:chapterInput},null,0).slice(0,35000);
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),90000);
   let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:aiConfig().model,messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:improving?0.25:0.65,max_tokens:improving?6500:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
@@ -188,6 +188,7 @@ async function pollModel(){
    const keys=Object.keys(parsed.changes),allowedFields=['lead','overview','events','mysteries','tips','tea'];
    if(!keys.length||keys.some(k=>!allowedFields.includes(k)))throw Error('invalid_chapter_fields');
    changes=parsed.changes;
+   if(cleanOverview.length!==ch.overview.length&&!changes.overview)changes.overview=cleanOverview;
    if(changes.overview){
     if(!Array.isArray(changes.overview)||changes.overview.length<2)throw Error('overview_too_short');
     changes.overview=changes.overview.filter(x=>!String(x).includes('【AI 扩写草稿｜未人工核验'));
