@@ -178,7 +178,7 @@ async function pollModel(){
   const chapterInput={title:ch.title,lead:ch.lead,overview:ch.overview,events:ch.events,mysteries:ch.mysteries,tips:ch.tips,tea:ch.tea};
   const prompt=JSON.stringify({episode:j.episode,userRequest:msg.content,chapter:chapterInput},null,0).slice(0,35000);
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),90000);
-  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:aiConfig().model,messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:improving?0.25:0.65,max_tokens:improving?6500:1400,...(improving?{response_format:{type:'json_object'}}:{})}),signal:controller.signal});}finally{clearTimeout(timer)}
+  let result;try{result=await fetch(base+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+aiConfig().key,'Content-Type':'application/json'},body:JSON.stringify({model:aiConfig().model,messages:[{role:'system',content:sys},{role:'user',content:prompt}],temperature:improving?0.25:0.65,max_tokens:improving?6500:1400}),signal:controller.signal});}finally{clearTimeout(timer)}
   if(!result.ok)throw Error('AI provider HTTP '+result.status);
   const output=await result.json();const raw=text(output.choices?.[0]?.message?.content,40000);if(!raw)throw Error('empty model reply');
   let changes=null,reply=raw;
